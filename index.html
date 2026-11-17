@@ -4,396 +4,413 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free online number to words and amount in words converter for businesses, invoices and payments.">
-  <meta name="theme-color" content="#ffffff">
 
-  <title>Number to Words Converter | Free Business Tools</title>
+  <meta
+    name="description"
+    content="Free online number to words and amount in words converter for businesses, invoices and payments."
+  >
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <meta name="theme-color" content="#f6f8fc">
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f7fb;
-      color: #182230;
-    }
+  <title>Number to Words Converter | BusinessTools</title>
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid #e7eaf0;
-      padding: 19px 20px;
-    }
-
-    .nav {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.7px;
-    }
-
-    .logo span {
-      color: #3563e9;
-    }
-
-    .nav-label {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .container {
-      max-width: 850px;
-      margin: 65px auto;
-      padding: 20px;
-    }
-
-    .intro {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .intro h1 {
-      font-size: 36px;
-      letter-spacing: -1px;
-      margin: 0 0 14px;
-    }
-
-    .intro p {
-      color: #64748b;
-      font-size: 16px;
-      line-height: 1.8;
-      margin: 0;
-    }
-
-    .tool {
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 16px;
-      border: 1px solid #e6eaf0;
-      box-shadow: 0 8px 30px rgba(20,35,70,0.05);
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 9px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #d9dfeb;
-      border-radius: 9px;
-      font-size: 16px;
-      background: #ffffff;
-      color: #182230;
-      margin-bottom: 23px;
-      outline: none;
-    }
-
-    input:focus, select:focus {
-      border-color: #3563e9;
-      box-shadow: 0 0 0 3px rgba(53,99,233,0.10);
-    }
-
-    .result-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 9px;
-    }
-
-    .result-heading label {
-      margin: 0;
-    }
-
-    .result {
-      background: #f4f7ff;
-      border: 1px solid #dce5ff;
-      border-radius: 10px;
-      padding: 19px;
-      min-height: 95px;
-      line-height: 1.8;
-      font-size: 16px;
-      overflow-wrap: anywhere;
-      color: #243b70;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    button {
-      border: 0;
-      border-radius: 9px;
-      padding: 14px 22px;
-      background: #3563e9;
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button:hover {
-      background: #244dc4;
-    }
-
-    button.secondary {
-      background: #17243b;
-    }
-
-    button.secondary:hover {
-      background: #2b3d59;
-    }
-
-    button:focus-visible {
-      outline: 3px solid #9db6ff;
-      outline-offset: 3px;
-    }
-
-    .message {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #64748b;
-      min-height: 18px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-top: 28px;
-    }
-
-    .feature {
-      background: #ffffff;
-      border: 1px solid #e7eaf0;
-      padding: 19px;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .feature strong {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 7px;
-    }
-
-    .feature p {
-      font-size: 12px;
-      color: #64748b;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      color: #8290a5;
-      font-size: 13px;
-      border-top: 1px solid #e7eaf0;
-      background: #ffffff;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        margin: 35px auto;
-        padding: 15px;
-      }
-
-      .intro h1 {
-        font-size: 28px;
-      }
-
-      .intro p {
-        font-size: 14px;
-      }
-
-      .tool {
-        padding: 21px;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-
-      .actions button {
-        flex: 1;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 
-  <header>
-    <div class="nav">
-      <div class="logo">Business<span>Tools</span></div>
-      <div class="nav-label">Free Online Tools</div>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a href="./" class="brand" aria-label="BusinessTools home">
+        Business<span>Tools</span>
+      </a>
+
+      <div class="header-actions">
+        <span class="form-hint">Free Online Tools</span>
+      </div>
+
     </div>
   </header>
 
-  <main class="container">
+  <!-- MAIN -->
+  <main>
 
-    <section class="intro">
-      <h1>Number to Words Converter</h1>
-      <p>
-        Convert numbers and monetary amounts into words instantly.
-        <br>
-        A free tool for businesses, invoices and everyday use.
-      </p>
-    </section>
+    <div class="container">
 
-    <section class="tool">
+      <!-- INTRO -->
+      <section class="page-heading">
+        <h1>Number to Words Converter</h1>
 
-      <label for="amount">Enter a number or amount</label>
+        <p>
+          Convert numbers and monetary amounts into words instantly.
+          A simple tool for businesses, invoices and everyday work.
+        </p>
+      </section>
 
-      <input
-        id="amount"
-        type="text"
-        inputmode="decimal"
-        placeholder="Example: 1250.50"
-        autocomplete="off"
-      >
+      <!-- CONVERTER -->
+      <section class="card converter-card" aria-label="Number converter">
 
-      <label for="language">Language</label>
+        <h2 class="card-title">Convert your amount</h2>
 
-      <select id="language">
-        <option value="en">English</option>
-        <option value="fr" disabled>French (Coming soon)</option>
-        <option value="ar" disabled>Arabic (Coming soon)</option>
-      </select>
+        <!-- AMOUNT -->
+        <div class="form-group">
 
-      <label for="currency">Currency</label>
+          <label class="form-label" for="amount">
+            Enter a number or amount
+          </label>
 
-      <select id="currency">
-        <option value="USD">US Dollar (USD)</option>
-        <option value="EUR">Euro (EUR)</option>
-        <option value="GBP">British Pound (GBP)</option>
-        <option value="TND">Tunisian Dinar (TND)</option>
-        <option value="SAR">Saudi Riyal (SAR)</option>
-        <option value="AED">UAE Dirham (AED)</option>
-        <option value="EGP">Egyptian Pound (EGP)</option>
-        <option value="INR">Indian Rupee (INR)</option>
-      </select>
+          <input
+            id="amount"
+            type="text"
+            inputmode="decimal"
+            placeholder="Example: 1250.50"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="amount-hint"
+          >
 
-      <div class="result-heading">
-        <label for="result">Result</label>
-      </div>
+          <span class="form-hint" id="amount-hint">
+            Enter a positive or negative amount using a decimal point.
+          </span>
 
-      <div
-        class="result"
-        id="result"
-        aria-live="polite"
-      >
-        Your result will appear here.
-      </div>
+        </div>
 
-      <div class="actions">
-        <button id="convert" type="button">
-          Convert to words
-        </button>
+        <!-- LANGUAGE AND CURRENCY -->
+        <div class="selection-grid">
 
-        <button
-          id="copy"
-          class="secondary"
-          type="button"
-        >
-          Copy result
-        </button>
-      </div>
+          <div class="form-group">
 
-      <div class="message" id="message" role="status"></div>
+            <label class="form-label" for="language">
+              Language
+            </label>
 
-    </section>
+            <select id="language">
+              <option value="en">English</option>
+              <option value="fr" disabled>Français (Coming soon)</option>
+              <option value="ar" disabled>العربية (Coming soon)</option>
+            </select>
 
-    <section class="features">
+          </div>
 
-      <div class="feature">
-        <strong>100% Free</strong>
-        <p>Use the converter without registration.</p>
-      </div>
+          <div class="form-group">
 
-      <div class="feature">
-        <strong>Multiple Currencies</strong>
-        <p>Convert amounts in different currencies.</p>
-      </div>
+            <label class="form-label" for="currency">
+              Currency
+            </label>
 
-      <div class="feature">
-        <strong>Easy to Use</strong>
-        <p>Get your result and copy it instantly.</p>
-      </div>
+            <select id="currency">
 
-    </section>
+              <option value="USD">🇺🇸 US Dollar (USD)</option>
+              <option value="EUR">🇪🇺 Euro (EUR)</option>
+              <option value="GBP">🇬🇧 British Pound (GBP)</option>
+              <option value="TND">🇹🇳 Tunisian Dinar (TND)</option>
+              <option value="SAR">🇸🇦 Saudi Riyal (SAR)</option>
+              <option value="AED">🇦🇪 UAE Dirham (AED)</option>
+              <option value="EGP">🇪🇬 Egyptian Pound (EGP)</option>
+              <option value="INR">🇮🇳 Indian Rupee (INR)</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <!-- QUICK CURRENCY SELECTION -->
+        <div class="form-group">
+
+          <span class="form-label">Quick currency selection</span>
+
+          <div class="quick-options" id="quickCurrencies">
+
+            <button
+              type="button"
+              class="quick-option active"
+              data-currency="USD"
+              aria-pressed="true"
+            >
+              USD $
+            </button>
+
+            <button
+              type="button"
+              class="quick-option"
+              data-currency="EUR"
+              aria-pressed="false"
+            >
+              EUR €
+            </button>
+
+            <button
+              type="button"
+              class="quick-option"
+              data-currency="GBP"
+              aria-pressed="false"
+            >
+              GBP £
+            </button>
+
+            <button
+              type="button"
+              class="quick-option"
+              data-currency="TND"
+              aria-pressed="false"
+            >
+              TND د.ت
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- CONVERT BUTTON -->
+        <div class="button-group">
+
+          <button
+            id="convert"
+            class="btn btn-primary btn-block"
+            type="button"
+          >
+            Convert to words
+          </button>
+
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-section">
+
+          <div class="result-heading">
+            <label class="form-label" for="result">
+              Conversion result
+            </label>
+          </div>
+
+          <div
+            class="result-box"
+            id="result"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+
+            <span class="result-text">
+              Your result will appear here.
+            </span>
+
+          </div>
+
+          <div class="button-group">
+
+            <button
+              id="copy"
+              class="btn btn-secondary btn-block"
+              type="button"
+            >
+              Copy result
+            </button>
+
+          </div>
+
+          <div
+            class="message"
+            id="message"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </div>
+
+      </section>
+
+      <!-- FEATURES -->
+      <section class="features" aria-label="Tool features">
+
+        <article class="feature">
+          <strong>100% Free</strong>
+          <p>Use the converter without registration.</p>
+        </article>
+
+        <article class="feature">
+          <strong>Multiple Currencies</strong>
+          <p>Convert amounts in different currencies.</p>
+        </article>
+
+        <article class="feature">
+          <strong>Easy to Use</strong>
+          <p>Get your result and copy it instantly.</p>
+        </article>
+
+      </section>
+
+    </div>
 
   </main>
 
-  <footer>
-    Free Business Tools · Simple tools for everyday work
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      BusinessTools · Simple tools for everyday work
+    </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- CONVERSION ENGINE -->
+  <script src="./script.js"></script>
 
+  <!-- PAGE INTERACTIONS -->
   <script>
+
     const amountInput = document.getElementById("amount");
+    const languageSelect = document.getElementById("language");
     const currencySelect = document.getElementById("currency");
+
     const resultBox = document.getElementById("result");
     const messageBox = document.getElementById("message");
 
-    document.getElementById("convert").addEventListener("click", function () {
-      const value = amountInput.value.trim();
-      const currency = currencySelect.value;
+    const convertButton = document.getElementById("convert");
+    const copyButton = document.getElementById("copy");
+
+    const quickCurrencyButtons =
+      document.querySelectorAll(".quick-option");
+
+    const placeholderText = "Your result will appear here.";
+
+    let currentResult = "";
+
+    // Update quick currency buttons
+    function updateQuickCurrencies() {
+
+      quickCurrencyButtons.forEach(button => {
+
+        const isActive =
+          button.dataset.currency === currencySelect.value;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute(
+          "aria-pressed",
+          String(isActive)
+        );
+
+      });
+
+    }
+
+    // Quick currency selection
+    quickCurrencyButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        currencySelect.value = button.dataset.currency;
+
+        updateQuickCurrencies();
+
+        messageBox.textContent = "";
+
+      });
+
+    });
+
+    // Currency dropdown selection
+    currencySelect.addEventListener("change", () => {
+
+      updateQuickCurrencies();
 
       messageBox.textContent = "";
 
+    });
+
+    // Convert amount
+    convertButton.addEventListener("click", () => {
+
+      const value = amountInput.value.trim();
+      const currency = currencySelect.value;
+      const language = languageSelect.value;
+
+      messageBox.textContent = "";
+      currentResult = "";
+
       if (!value) {
+
         resultBox.textContent = "Please enter an amount first.";
+
+        messageBox.textContent =
+          "The amount field cannot be empty.";
+
         return;
+
       }
 
       try {
-        resultBox.textContent = amountToWords(value, currency);
+
+        if (typeof amountToWords !== "function") {
+          throw new Error("Conversion engine is unavailable.");
+        }
+
+        const converted = amountToWords(
+          value,
+          currency,
+          language
+        );
+
+        if (!converted) {
+          throw new Error("No conversion result was returned.");
+        }
+
+        currentResult = converted;
+
+        resultBox.textContent = converted;
+
       } catch (error) {
-        resultBox.textContent = "Unable to convert this amount.";
+
+        resultBox.textContent =
+          "Unable to convert this amount.";
+
         messageBox.textContent = error.message;
+
       }
+
     });
 
-    document.getElementById("copy").addEventListener("click", async function () {
-      const text = resultBox.textContent;
+    // Copy result
+    copyButton.addEventListener("click", async () => {
 
-      if (!text || text === "Your result will appear here.") {
-        messageBox.textContent = "There is no result to copy.";
+      if (!currentResult) {
+
+        messageBox.textContent =
+          "There is no result to copy.";
+
         return;
+
       }
 
       try {
-        await navigator.clipboard.writeText(text);
-        messageBox.textContent = "Result copied successfully.";
+
+        await navigator.clipboard.writeText(currentResult);
+
+        messageBox.textContent =
+          "Result copied successfully.";
+
       } catch (error) {
-        messageBox.textContent = "Copy is unavailable in this browser.";
+
+        messageBox.textContent =
+          "Copy is unavailable in this browser.";
+
       }
+
     });
 
-    amountInput.addEventListener("keydown", function (event) {
+    // Press Enter to convert
+    amountInput.addEventListener("keydown", event => {
+
       if (event.key === "Enter") {
-        document.getElementById("convert").click();
+        convertButton.click();
       }
+
     });
+
+    // Initial state
+    updateQuickCurrencies();
+
   </script>
 
 </body>
