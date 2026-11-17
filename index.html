@@ -4,121 +4,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free number to words and amount in words converter for business, invoices and payments.">
-  <title>Number to Words | Free Business Tool</title>
+  <meta name="description" content="Free online number to words and amount in words converter for businesses, invoices and payments.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Number to Words Converter | Free Business Tools</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: #f5f7fb;
       color: #182230;
     }
+
     header {
-      background: white;
+      background: #ffffff;
       border-bottom: 1px solid #e7eaf0;
-      padding: 20px;
+      padding: 19px 20px;
     }
+
     .nav {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .logo { font-size: 21px; font-weight: 800; }
-    .logo span { color: #3563e9; }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+
+    .logo span {
+      color: #3563e9;
+    }
+
+    .nav-label {
+      color: #64748b;
+      font-size: 14px;
+    }
+
     .container {
       max-width: 850px;
       margin: 65px auto;
       padding: 20px;
     }
-    .intro { text-align: center; margin-bottom: 35px; }
-    .intro h1 { font-size: 36px; margin-bottom: 12px; }
-    .intro p { color: #64748b; line-height: 1.7; }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .intro h1 {
+      font-size: 36px;
+      letter-spacing: -1px;
+      margin: 0 0 14px;
+    }
+
+    .intro p {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
     .tool {
-      background: white;
-      padding: 30px;
+      background: #ffffff;
+      padding: 32px;
       border-radius: 16px;
       border: 1px solid #e6eaf0;
-      box-shadow: 0 8px 30px rgba(20,35,70,.05);
+      box-shadow: 0 8px 30px rgba(20,35,70,0.05);
     }
+
     label {
       display: block;
       font-weight: 600;
+      font-size: 14px;
       margin-bottom: 9px;
     }
+
     input, select {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       border: 1px solid #d9dfeb;
       border-radius: 9px;
       font-size: 16px;
-      background: white;
-      margin-bottom: 22px;
+      background: #ffffff;
+      color: #182230;
+      margin-bottom: 23px;
+      outline: none;
     }
+
+    input:focus, select:focus {
+      border-color: #3563e9;
+      box-shadow: 0 0 0 3px rgba(53,99,233,0.10);
+    }
+
+    .result-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+    }
+
+    .result-heading label {
+      margin: 0;
+    }
+
     .result {
       background: #f4f7ff;
       border: 1px solid #dce5ff;
       border-radius: 10px;
-      padding: 18px;
-      min-height: 85px;
-      line-height: 1.7;
+      padding: 19px;
+      min-height: 95px;
+      line-height: 1.8;
+      font-size: 16px;
       overflow-wrap: anywhere;
+      color: #243b70;
     }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
     button {
       border: 0;
       border-radius: 9px;
-      padding: 13px 20px;
+      padding: 14px 22px;
       background: #3563e9;
-      color: white;
+      color: #ffffff;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 15px;
+      transition: background 0.2s;
     }
-    button:hover { background: #244dc4; }
+
+    button:hover {
+      background: #244dc4;
+    }
+
+    button.secondary {
+      background: #17243b;
+    }
+
+    button.secondary:hover {
+      background: #2b3d59;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #9db6ff;
+      outline-offset: 3px;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #64748b;
+      min-height: 18px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 28px;
+    }
+
+    .feature {
+      background: #ffffff;
+      border: 1px solid #e7eaf0;
+      padding: 19px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    .feature p {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0;
+    }
+
     footer {
       text-align: center;
-      padding: 30px;
+      padding: 30px 15px;
       color: #8290a5;
       font-size: 13px;
+      border-top: 1px solid #e7eaf0;
+      background: #ffffff;
     }
-    @media(max-width:600px) {
-      .container { margin: 35px auto; }
-      .intro h1 { font-size: 28px; }
-      .tool { padding: 20px; }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 35px auto;
+        padding: 15px;
+      }
+
+      .intro h1 {
+        font-size: 28px;
+      }
+
+      .intro p {
+        font-size: 14px;
+      }
+
+      .tool {
+        padding: 21px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .actions button {
+        flex: 1;
+      }
     }
   </style>
 </head>
+
 <body>
+
   <header>
     <div class="nav">
       <div class="logo">Business<span>Tools</span></div>
-      <div>Free Online Tools</div>
+      <div class="nav-label">Free Online Tools</div>
     </div>
   </header>
 
   <main class="container">
+
     <section class="intro">
       <h1>Number to Words Converter</h1>
-      <p>Convert numbers and monetary amounts into words instantly.<br>
-      A free tool for businesses, invoices and everyday use.</p>
+      <p>
+        Convert numbers and monetary amounts into words instantly.
+        <br>
+        A free tool for businesses, invoices and everyday use.
+      </p>
     </section>
 
     <section class="tool">
+
       <label for="amount">Enter a number or amount</label>
-      <input id="amount" type="text" inputmode="decimal"
-        placeholder="Example: 1250.50">
+
+      <input
+        id="amount"
+        type="text"
+        inputmode="decimal"
+        placeholder="Example: 1250.50"
+        autocomplete="off"
+      >
 
       <label for="language">Language</label>
+
       <select id="language">
         <option value="en">English</option>
-        <option value="fr">French</option>
-        <option value="ar">Arabic</option>
+        <option value="fr" disabled>French (Coming soon)</option>
+        <option value="ar" disabled>Arabic (Coming soon)</option>
       </select>
 
       <label for="currency">Currency</label>
+
       <select id="currency">
         <option value="USD">US Dollar (USD)</option>
         <option value="EUR">Euro (EUR)</option>
@@ -130,18 +291,110 @@
         <option value="INR">Indian Rupee (INR)</option>
       </select>
 
-      <label>Result</label>
-      <div class="result" id="result">
+      <div class="result-heading">
+        <label for="result">Result</label>
+      </div>
+
+      <div
+        class="result"
+        id="result"
+        aria-live="polite"
+      >
         Your result will appear here.
       </div>
 
-      <button id="convert">Convert to words</button>
-      <button id="copy" style="background:#17243b">Copy result</button>
+      <div class="actions">
+        <button id="convert" type="button">
+          Convert to words
+        </button>
+
+        <button
+          id="copy"
+          class="secondary"
+          type="button"
+        >
+          Copy result
+        </button>
+      </div>
+
+      <div class="message" id="message" role="status"></div>
+
     </section>
+
+    <section class="features">
+
+      <div class="feature">
+        <strong>100% Free</strong>
+        <p>Use the converter without registration.</p>
+      </div>
+
+      <div class="feature">
+        <strong>Multiple Currencies</strong>
+        <p>Convert amounts in different currencies.</p>
+      </div>
+
+      <div class="feature">
+        <strong>Easy to Use</strong>
+        <p>Get your result and copy it instantly.</p>
+      </div>
+
+    </section>
+
   </main>
 
   <footer>
     Free Business Tools · Simple tools for everyday work
   </footer>
+
+  <script src="script.js"></script>
+
+  <script>
+    const amountInput = document.getElementById("amount");
+    const currencySelect = document.getElementById("currency");
+    const resultBox = document.getElementById("result");
+    const messageBox = document.getElementById("message");
+
+    document.getElementById("convert").addEventListener("click", function () {
+      const value = amountInput.value.trim();
+      const currency = currencySelect.value;
+
+      messageBox.textContent = "";
+
+      if (!value) {
+        resultBox.textContent = "Please enter an amount first.";
+        return;
+      }
+
+      try {
+        resultBox.textContent = amountToWords(value, currency);
+      } catch (error) {
+        resultBox.textContent = "Unable to convert this amount.";
+        messageBox.textContent = error.message;
+      }
+    });
+
+    document.getElementById("copy").addEventListener("click", async function () {
+      const text = resultBox.textContent;
+
+      if (!text || text === "Your result will appear here.") {
+        messageBox.textContent = "There is no result to copy.";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        messageBox.textContent = "Result copied successfully.";
+      } catch (error) {
+        messageBox.textContent = "Copy is unavailable in this browser.";
+      }
+    });
+
+    amountInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        document.getElementById("convert").click();
+      }
+    });
+  </script>
+
 </body>
 </html>
