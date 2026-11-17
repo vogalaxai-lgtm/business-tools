@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free number to words and amount in words converter for business, invoices and payments.">
+  <title>Number to Words | Free Business Tool</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #182230;
+    }
+    header {
+      background: white;
+      border-bottom: 1px solid #e7eaf0;
+      padding: 20px;
+    }
+    .nav {
+      max-width: 1050px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 21px; font-weight: 800; }
+    .logo span { color: #3563e9; }
+    .container {
+      max-width: 850px;
+      margin: 65px auto;
+      padding: 20px;
+    }
+    .intro { text-align: center; margin-bottom: 35px; }
+    .intro h1 { font-size: 36px; margin-bottom: 12px; }
+    .intro p { color: #64748b; line-height: 1.7; }
+    .tool {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid #e6eaf0;
+      box-shadow: 0 8px 30px rgba(20,35,70,.05);
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9dfeb;
+      border-radius: 9px;
+      font-size: 16px;
+      background: white;
+      margin-bottom: 22px;
+    }
+    .result {
+      background: #f4f7ff;
+      border: 1px solid #dce5ff;
+      border-radius: 10px;
+      padding: 18px;
+      min-height: 85px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 13px 20px;
+      background: #3563e9;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover { background: #244dc4; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #8290a5;
+      font-size: 13px;
+    }
+    @media(max-width:600px) {
+      .container { margin: 35px auto; }
+      .intro h1 { font-size: 28px; }
+      .tool { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">Business<span>Tools</span></div>
+      <div>Free Online Tools</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h1>Number to Words Converter</h1>
+      <p>Convert numbers and monetary amounts into words instantly.<br>
+      A free tool for businesses, invoices and everyday use.</p>
+    </section>
+
+    <section class="tool">
+      <label for="amount">Enter a number or amount</label>
+      <input id="amount" type="text" inputmode="decimal"
+        placeholder="Example: 1250.50">
+
+      <label for="language">Language</label>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="ar">Arabic</option>
+      </select>
+
+      <label for="currency">Currency</label>
+      <select id="currency">
+        <option value="USD">US Dollar (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="GBP">British Pound (GBP)</option>
+        <option value="TND">Tunisian Dinar (TND)</option>
+        <option value="SAR">Saudi Riyal (SAR)</option>
+        <option value="AED">UAE Dirham (AED)</option>
+        <option value="EGP">Egyptian Pound (EGP)</option>
+        <option value="INR">Indian Rupee (INR)</option>
+      </select>
+
+      <label>Result</label>
+      <div class="result" id="result">
+        Your result will appear here.
+      </div>
+
+      <button id="convert">Convert to words</button>
+      <button id="copy" style="background:#17243b">Copy result</button>
+    </section>
+  </main>
+
+  <footer>
+    Free Business Tools · Simple tools for everyday work
+  </footer>
+</body>
+</html>
