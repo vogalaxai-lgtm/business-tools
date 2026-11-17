@@ -255,7 +255,6 @@
     const languageSelect = document.getElementById("language");
     const currencySelect = document.getElementById("currency");
 
-    const resultBox = document.getElementById("result");
     const resultText = document.getElementById("resultText");
     const messageBox = document.getElementById("message");
 
@@ -267,6 +266,8 @@
 
     let currentResult = "";
     let copyResetTimer;
+
+    const DEFAULT_RESULT = "Your result will appear here.";
 
     // Update quick currency buttons
     function updateQuickCurrencies() {
@@ -296,6 +297,19 @@
 
     }
 
+    // Clear previous conversion
+    function clearPreviousResult() {
+
+      currentResult = "";
+
+      resultText.textContent = DEFAULT_RESULT;
+
+      messageBox.textContent = "";
+
+      resetCopyButton();
+
+    }
+
     // Quick currency selection
     quickCurrencyButtons.forEach(button => {
 
@@ -305,7 +319,7 @@
 
         updateQuickCurrencies();
 
-        messageBox.textContent = "";
+        clearPreviousResult();
 
       });
 
@@ -316,47 +330,51 @@
 
       updateQuickCurrencies();
 
-      messageBox.textContent = "";
+      clearPreviousResult();
+
+    });
+
+    // Language selection
+    languageSelect.addEventListener("change", () => {
+
+      clearPreviousResult();
+
+    });
+
+    // Clear old result when amount changes
+    amountInput.addEventListener("input", () => {
+
+      clearPreviousResult();
 
     });
 
     // Convert amount
     convertButton.addEventListener("click", () => {
 
-      const value = amountInput.value.trim();
-      const currency = currencySelect.value;
-      const language = languageSelect.value;
-
-      messageBox.textContent = "";
-      currentResult = "";
-
-      resetCopyButton();
-
-      if (!value) {
-
-        resultText.textContent = "Please enter an amount first.";
-
-        messageBox.textContent =
-          "The amount field cannot be empty.";
-
-        return;
-
-      }
+      clearPreviousResult();
 
       try {
 
         if (typeof amountToWords !== "function") {
-          throw new Error("Conversion engine is unavailable.");
+
+          throw new Error(
+            "Conversion engine is unavailable."
+          );
+
         }
 
         const converted = amountToWords(
-          value,
-          currency,
-          language
+          amountInput.value,
+          currencySelect.value,
+          languageSelect.value
         );
 
-        if (!converted) {
-          throw new Error("No conversion result was returned.");
+        if (typeof converted !== "string" || !converted.trim()) {
+
+          throw new Error(
+            "No conversion result was returned."
+          );
+
         }
 
         currentResult = converted;
@@ -368,7 +386,10 @@
         resultText.textContent =
           "Unable to convert this amount.";
 
-        messageBox.textContent = error.message;
+        messageBox.textContent =
+          error && error.message
+            ? error.message
+            : "An unexpected error occurred.";
 
       }
 
@@ -416,7 +437,9 @@
     amountInput.addEventListener("keydown", event => {
 
       if (event.key === "Enter") {
+
         convertButton.click();
+
       }
 
     });
