@@ -568,160 +568,71 @@ tr:last-child td {
   }
 }
 
-/* =========================================
-   MOBILE COMPACT LAYOUT
-========================================= */
-
+/* Compact mobile converter spacing */
 @media (max-width: 540px) {
 
-  main {
-    padding-top: 14px;
-    padding-bottom: 20px;
-  }
-
-  .page-heading {
-    margin-bottom: 14px;
-  }
-
-  .page-heading h1 {
-    font-size: 25px;
-    margin-bottom: 5px;
-  }
-
-  .page-heading p {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
   .converter-card {
-    padding: 14px;
+    padding: 12px;
   }
 
   .card-title {
-    font-size: 17px;
-    margin-bottom: 12px;
+    margin: 0 0 8px;
   }
 
-  .form-group {
-    gap: 4px;
-    margin-bottom: 12px;
+  .converter-card .form-group {
+    margin: 0 0 8px;
+    gap: 3px;
   }
 
-  .form-label {
-    font-size: 13px;
-  }
-
-  .form-hint {
-    font-size: 12px;
-  }
-
-  input,
-  select,
-  textarea {
-    min-height: 42px;
-    padding: 8px 11px;
-  }
-
-  .selection-grid {
-    gap: 9px;
-  }
-
-  .quick-options {
-    gap: 6px;
-  }
-
-  .quick-option {
-    min-height: 33px;
-    padding: 5px 10px;
-    font-size: 12px;
-  }
-
-  .button-group {
-    gap: 7px;
-    margin-top: 12px;
-  }
-
-  .btn {
-    min-height: 41px;
-    padding: 8px 14px;
-  }
-
-  .result-section {
-    margin-top: 14px;
-  }
-
-  .result-box {
-    padding: 13px;
-  }
-
-  .result-label {
-    margin-bottom: 5px;
-  }
-
-  .result-text {
-    font-size: 15px;
-    line-height: 1.5;
-  }
-}
-@media (max-width: 540px) {
-
-  .form-group {
-    gap: 2px;
-    margin-bottom: 7px;
-  }
-
-  .form-label {
-    margin-bottom: 1px;
-    line-height: 1.2;
-  }
-
-  .form-hint {
-    margin-top: 1px;
+  .converter-card .form-label {
+    margin: 0;
     line-height: 1.25;
   }
 
-  .selection-grid {
+  .converter-card .form-hint {
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .converter-card input,
+  .converter-card select {
+    min-height: 38px;
+    padding: 7px 10px;
+  }
+
+  .converter-card .selection-grid {
+    gap: 7px;
+    margin-bottom: 7px;
+  }
+
+  .converter-card .selection-grid .form-group {
+    margin-bottom: 0;
+  }
+
+  .converter-card .quick-options {
     gap: 5px;
+    margin-top: 2px;
   }
 
-  .quick-options {
-    gap: 4px;
-    margin-top: 4px;
-  }
-
-  .quick-option {
-    min-height: 30px;
+  .converter-card .quick-option {
+    min-height: 29px;
     padding: 4px 8px;
   }
 
-  .card-title {
-    margin-bottom: 8px;
+  .converter-card .button-group {
+    margin-top: 7px;
+    gap: 6px;
   }
 
-  .button-group {
-    margin-top: 8px;
-  }
-
-  .result-section {
+  .converter-card .result-section {
     margin-top: 9px;
   }
 
-  .result-box {
+  .converter-card .result-box {
     padding: 10px;
   }
 
-  .features {
-    margin-top: 12px;
-    gap: 8px;
-  }
-
-  .feature {
-    padding: 8px;
-  }
-
-  .site-footer {
-    margin-top: 12px;
-    padding-top: 10px;
+  .converter-card .result-text {
+    line-height: 1.4;
   }
 }
-
