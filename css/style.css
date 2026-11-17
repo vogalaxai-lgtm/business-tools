@@ -1,7 +1,8 @@
 
 /* =========================================
    BUSINESS TOOLS — DESIGN SYSTEM
-   Clean unified version
+   Version 2.2
+   Responsive + Amount Input Enhancements
 ========================================= */
 
 /* 1. Design tokens */
@@ -75,7 +76,6 @@ button {
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
 }
 
 /* 3. Accessibility */
@@ -241,7 +241,82 @@ textarea {
   resize: vertical;
 }
 
-/* 8. Language and currency */
+/* 8. Amount input and clear button */
+
+.amount-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.amount-input-wrapper input {
+  width: 100%;
+  padding-right: 46px;
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+.clear-amount {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #8993a5;
+
+  font-size: 23px;
+  line-height: 1;
+
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.clear-amount:hover {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.clear-amount:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.amount-hint {
+  margin-top: 6px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.amount-error {
+  margin-top: 6px;
+  color: var(--color-danger);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.amount-input-wrapper input.input-error,
+.amount-input-wrapper input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  background: #fffafa;
+}
+
+.amount-input-wrapper input.input-error:focus,
+.amount-input-wrapper input[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 4px rgba(214, 69, 69, 0.12);
+}
+
+/* 9. Language and currency */
 
 .selection-grid {
   display: grid;
@@ -279,7 +354,7 @@ textarea {
   color: var(--color-primary);
 }
 
-/* 9. Buttons */
+/* 10. Buttons */
 
 .btn {
   min-height: 46px;
@@ -288,16 +363,20 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 8px;
+
   border: 1px solid transparent;
   border-radius: var(--radius-md);
+
   font-weight: 650;
   text-align: center;
+
   transition: background 0.18s ease,
     border-color 0.18s ease,
+    color 0.18s ease,
     transform 0.18s ease;
 }
 
-.btn:active {
+.btn:active:not(:disabled) {
   transform: scale(0.98);
 }
 
@@ -316,7 +395,7 @@ textarea {
   color: var(--color-text);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background: var(--color-surface-soft);
   border-color: #c6cfdd;
 }
@@ -332,7 +411,31 @@ textarea {
   margin-top: 20px;
 }
 
-/* 10. Results */
+/* Copy button states */
+
+.converter-card #copy {
+  margin-top: 2px;
+  background: #172033;
+  border-color: #172033;
+  color: #ffffff;
+}
+
+.converter-card #copy:hover:not(:disabled) {
+  background: #293750;
+  border-color: #293750;
+}
+
+/* Disabled copy button */
+
+.converter-card #copy:disabled {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: #a3acba;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* 11. Results */
 
 .result-section {
   margin-top: 16px;
@@ -347,9 +450,11 @@ textarea {
   padding: 16px;
   display: flex;
   align-items: center;
+
   background: #F5F3FF;
   border: 1px solid #DDD6FE;
   border-radius: 10px;
+
   overflow-wrap: anywhere;
 }
 
@@ -359,13 +464,10 @@ textarea {
   font-weight: 600;
   line-height: 1.7;
   overflow-wrap: anywhere;
+  word-break: normal;
 }
 
-.converter-card #copy {
-  margin-top: 2px;
-}
-
-/* 11. Feedback and validation */
+/* 12. Feedback and validation */
 
 .message {
   margin-top: 6px;
@@ -380,7 +482,8 @@ textarea {
   color: var(--color-success);
 }
 
-.message-error {
+.message-error,
+.error-message {
   padding: 10px 12px;
   border-radius: var(--radius-md);
   background: var(--color-danger-soft);
@@ -388,7 +491,7 @@ textarea {
 }
 
 .input-error {
-  border-color: var(--color-danger);
+  border-color: var(--color-danger) !important;
 }
 
 .error-text {
@@ -396,7 +499,7 @@ textarea {
   font-size: 13px;
 }
 
-/* 12. Batch converter */
+/* 13. Batch converter */
 
 .batch-toolbar {
   display: flex;
@@ -436,7 +539,7 @@ textarea {
   gap: 8px;
 }
 
-/* 13. Data tables */
+/* 14. Data tables */
 
 .table-wrapper {
   width: 100%;
@@ -472,7 +575,7 @@ tr:last-child td {
   border-bottom: none;
 }
 
-/* 14. Features */
+/* 15. Features */
 
 .features {
   margin-top: 24px;
@@ -500,7 +603,7 @@ tr:last-child td {
   font-size: 13px;
 }
 
-/* 15. Footer */
+/* 16. Footer */
 
 .site-footer {
   margin-top: 24px;
@@ -511,7 +614,7 @@ tr:last-child td {
   font-size: 13px;
 }
 
-/* 16. RTL support */
+/* 17. RTL support */
 
 [dir="rtl"] {
   text-align: right;
@@ -526,7 +629,17 @@ tr:last-child td {
   text-align: center;
 }
 
-/* 17. Tablet */
+[dir="rtl"] .amount-input-wrapper input {
+  padding-right: 14px;
+  padding-left: 46px;
+}
+
+[dir="rtl"] .clear-amount {
+  right: auto;
+  left: 10px;
+}
+
+/* 18. Tablet */
 
 @media (max-width: 768px) {
 
@@ -547,7 +660,7 @@ tr:last-child td {
   }
 }
 
-/* 18. Mobile */
+/* 19. Mobile */
 
 @media (max-width: 540px) {
 
@@ -606,6 +719,18 @@ tr:last-child td {
   .converter-card select {
     min-height: 38px;
     padding: 6px 9px;
+  }
+
+  .converter-card .amount-input-wrapper input {
+    min-height: 42px;
+    padding: 7px 42px 7px 10px;
+    font-size: 16px;
+  }
+
+  .converter-card .clear-amount {
+    right: 7px;
+    width: 28px;
+    height: 28px;
   }
 
   .selection-grid {
@@ -684,5 +809,14 @@ tr:last-child td {
 
   .batch-result {
     grid-column: auto;
+  }
+
+  [dir="rtl"] .converter-card .amount-input-wrapper input {
+    padding: 7px 10px 7px 42px;
+  }
+
+  [dir="rtl"] .converter-card .clear-amount {
+    right: auto;
+    left: 7px;
   }
 }
