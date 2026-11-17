@@ -272,9 +272,8 @@
     const quickCurrencyButtons =
       document.querySelectorAll(".quick-option");
 
-    const placeholderText = "Your result will appear here.";
-
     let currentResult = "";
+    let copyResetTimer;
 
     // Update quick currency buttons
     function updateQuickCurrencies() {
@@ -292,6 +291,15 @@
         );
 
       });
+
+    }
+
+    // Reset copy button
+    function resetCopyButton() {
+
+      clearTimeout(copyResetTimer);
+
+      copyButton.textContent = "Copy result";
 
     }
 
@@ -328,6 +336,8 @@
 
       messageBox.textContent = "";
       currentResult = "";
+
+      resetCopyButton();
 
       if (!value) {
 
@@ -387,8 +397,18 @@
 
         await navigator.clipboard.writeText(currentResult);
 
+        clearTimeout(copyResetTimer);
+
+        copyButton.textContent = "Copied ✓";
+
         messageBox.textContent =
           "Result copied successfully.";
+
+        copyResetTimer = setTimeout(() => {
+
+          copyButton.textContent = "Copy result";
+
+        }, 2000);
 
       } catch (error) {
 
