@@ -1,2 +1,2 @@
 # business-tools
-Free multilingual business tools اختر Public.
+Free multilingual business tools.
