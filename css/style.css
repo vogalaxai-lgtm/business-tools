@@ -637,7 +637,7 @@ tr:last-child td {
   }
 }
 
-/* Professional conversion result */
+/* Refined violet result box */
 .converter-card .result-section {
   margin-top: 16px;
 }
@@ -647,8 +647,8 @@ tr:last-child td {
 }
 
 .converter-card .result-box {
-  background: #f5f7ff;
-  border: 1px solid #dce3f5;
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
   border-radius: 10px;
   padding: 16px;
   min-height: 72px;
@@ -657,7 +657,7 @@ tr:last-child td {
 }
 
 .converter-card .result-text {
-  color: #24345b;
+  color: #37306B;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.7;
