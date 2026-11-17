@@ -1,5 +1,12 @@
-
 "use strict";
+
+/* =========================================
+   BUSINESS TOOLS — NUMBER TO WORDS ENGINE
+   Version 1.1
+   Accurate decimal handling with BigInt
+========================================= */
+
+/* 1. Number vocabulary */
 
 const ONES = [
   "zero", "one", "two", "three", "four",
@@ -19,6 +26,8 @@ const SCALES = [
   "trillion", "quadrillion", "quintillion"
 ];
 
+/* 2. Supported currencies */
+
 const CURRENCIES = {
   USD: {
     major: "dollar",
@@ -27,6 +36,7 @@ const CURRENCIES = {
     minorPlural: "cents",
     digits: 2
   },
+
   EUR: {
     major: "euro",
     majorPlural: "euros",
@@ -34,6 +44,7 @@ const CURRENCIES = {
     minorPlural: "cents",
     digits: 2
   },
+
   GBP: {
     major: "pound",
     majorPlural: "pounds",
@@ -41,6 +52,7 @@ const CURRENCIES = {
     minorPlural: "pence",
     digits: 2
   },
+
   TND: {
     major: "Tunisian dinar",
     majorPlural: "Tunisian dinars",
@@ -48,6 +60,7 @@ const CURRENCIES = {
     minorPlural: "millimes",
     digits: 3
   },
+
   SAR: {
     major: "Saudi riyal",
     majorPlural: "Saudi riyals",
@@ -55,6 +68,7 @@ const CURRENCIES = {
     minorPlural: "halalas",
     digits: 2
   },
+
   AED: {
     major: "UAE dirham",
     majorPlural: "UAE dirhams",
@@ -62,6 +76,7 @@ const CURRENCIES = {
     minorPlural: "fils",
     digits: 2
   },
+
   EGP: {
     major: "Egyptian pound",
     majorPlural: "Egyptian pounds",
@@ -69,6 +84,7 @@ const CURRENCIES = {
     minorPlural: "piastres",
     digits: 2
   },
+
   INR: {
     major: "Indian rupee",
     majorPlural: "Indian rupees",
@@ -78,8 +94,12 @@ const CURRENCIES = {
   }
 };
 
+/* 3. Convert numbers below 1000 */
+
 function underThousand(n) {
-  if (n < 20) return ONES[n];
+  if (n < 20) {
+    return ONES[n];
+  }
 
   if (n < 100) {
     const remainder = n % 10;
@@ -94,10 +114,14 @@ function underThousand(n) {
     (remainder ? " " + underThousand(remainder) : "");
 }
 
+/* 4. Convert large integers using BigInt */
+
 function integerToWords(value) {
   let n = BigInt(value);
 
-  if (n === 0n) return "zero";
+  if (n === 0n) {
+    return "zero";
+  }
 
   if (n < 0n) {
     return "minus " + integerToWords(-n);
@@ -111,7 +135,9 @@ function integerToWords(value) {
 
     if (group > 0) {
       if (scale >= SCALES.length) {
-        throw new Error("Number is too large.");
+        throw new Error(
+          "The number is too large to convert."
+        );
       }
 
       groups.unshift(
@@ -127,19 +153,45 @@ function integerToWords(value) {
   return groups.join(" ");
 }
 
+/* 5. Validate and parse user input */
+
 function parseAmount(input, digits) {
   const value = String(input).trim();
 
-  if (!/^-?\d+(?:\.\d+)?$/.test(value)) {
+  /*
+    Accepted:
+    999
+    999.99
+    999999.99
+    999,999.99
+    -999,999.99
+
+    Rejected:
+    999.999.99
+    999.999.99.9
+    99,99.99
+    999,99,999
+    abc123
+  */
+
+  const validFormat =
+    /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
+
+  if (!validFormat.test(value)) {
     throw new Error(
-      "Enter a valid number using a dot for decimals."
+      "Invalid number format. Use commas for thousands and a dot for decimals. Example: 999,999.99"
     );
   }
 
   const negative = value.startsWith("-");
-  const unsigned = negative ? value.slice(1) : value;
 
-  const [whole, fraction = ""] = unsigned.split(".");
+  const unsigned = negative
+    ? value.slice(1)
+    : value;
+
+  const normalized = unsigned.replace(/,/g, "");
+
+  const [whole, fraction = ""] = normalized.split(".");
 
   if (fraction.length > digits) {
     throw new Error(
@@ -149,14 +201,26 @@ function parseAmount(input, digits) {
 
   return {
     negative,
+
     major: BigInt(whole),
+
     minor: digits > 0
-      ? BigInt((fraction + "0".repeat(digits)).slice(0, digits))
+      ? BigInt(
+          (fraction + "0".repeat(digits)).slice(0, digits)
+        )
       : 0n
   };
 }
 
-function amountToWords(input, currencyCode) {
+/* 6. Convert monetary amounts into words */
+
+function amountToWords(input, currencyCode, language = "en") {
+  if (language !== "en") {
+    throw new Error(
+      "This version currently supports English only."
+    );
+  }
+
   const currency = CURRENCIES[currencyCode];
 
   if (!currency) {
@@ -166,21 +230,36 @@ function amountToWords(input, currencyCode) {
   const amount = parseAmount(input, currency.digits);
 
   const isZero =
-    amount.major === 0n && amount.minor === 0n;
+    amount.major === 0n &&
+    amount.minor === 0n;
 
-  let result =
-    integerToWords(amount.major) + " " +
-    (amount.major === 1n
-      ? currency.major
-      : currency.majorPlural);
+  let result = "";
+
+  /* Major currency unit */
+
+  if (amount.major > 0n || amount.minor === 0n) {
+    result =
+      integerToWords(amount.major) + " " +
+      (amount.major === 1n
+        ? currency.major
+        : currency.majorPlural);
+  }
+
+  /* Minor currency unit */
 
   if (amount.minor > 0n) {
-    result += " and " +
+    const minorWords =
       integerToWords(amount.minor) + " " +
       (amount.minor === 1n
         ? currency.minor
         : currency.minorPlural);
+
+    result = result
+      ? result + " and " + minorWords
+      : minorWords;
   }
+
+  /* Negative amounts */
 
   if (amount.negative && !isZero) {
     result = "minus " + result;
