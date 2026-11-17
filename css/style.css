@@ -1,7 +1,7 @@
+
 /* =========================================
    BUSINESS TOOLS — DESIGN SYSTEM
-   Version 1.0
-   Mobile-first, responsive, accessible
+   Clean unified version
 ========================================= */
 
 /* 1. Design tokens */
@@ -25,7 +25,6 @@
   --color-success-soft: #eaf7f0;
   --color-danger: #d64545;
   --color-danger-soft: #fff0f0;
-  --color-warning: #a56a12;
 
   --font-main: Inter, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -33,21 +32,11 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
-  --radius-xl: 24px;
 
   --shadow-card: 0 4px 20px rgba(25, 40, 75, 0.045);
   --shadow-focus: 0 0 0 4px rgba(49, 87, 213, 0.14);
 
   --content-width: 1080px;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
 }
 
 /* 2. Reset */
@@ -89,11 +78,6 @@ button:disabled {
   opacity: 0.55;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 /* 3. Accessibility */
 
 :focus-visible {
@@ -133,7 +117,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: 16px;
 }
 
 .brand {
@@ -151,7 +135,7 @@ img {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
 }
 
 /* 5. Main content */
@@ -257,7 +241,7 @@ textarea {
   resize: vertical;
 }
 
-/* 8. Language and currency selection */
+/* 8. Language and currency */
 
 .selection-grid {
   display: grid;
@@ -308,7 +292,9 @@ textarea {
   border-radius: var(--radius-md);
   font-weight: 650;
   text-align: center;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
 }
 
 .btn:active {
@@ -349,46 +335,54 @@ textarea {
 /* 10. Results */
 
 .result-section {
-  margin-top: 24px;
+  margin-top: 16px;
+}
+
+.result-heading {
+  margin-bottom: 7px;
 }
 
 .result-box {
-  padding: 20px;
-  background: var(--color-primary-soft);
-  border: 1px solid #dce4ff;
-  border-radius: var(--radius-md);
+  min-height: 72px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
+  border-radius: 10px;
   overflow-wrap: anywhere;
 }
 
-.result-label {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--color-text-secondary);
-  font-size: 13px;
-  font-weight: 650;
+.result-text {
+  color: #37306B;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
-.result-text {
-  color: var(--color-text);
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.8;
+.converter-card #copy {
+  margin-top: 2px;
 }
 
 /* 11. Feedback and validation */
 
 .message {
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  font-size: 14px;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .message-success {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
   background: var(--color-success-soft);
   color: var(--color-success);
 }
 
 .message-error {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
   background: var(--color-danger-soft);
   color: var(--color-danger);
 }
@@ -478,9 +472,38 @@ tr:last-child td {
   border-bottom: none;
 }
 
-/* 14. Footer */
+/* 14. Features */
+
+.features {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature {
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.feature strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+/* 15. Footer */
 
 .site-footer {
+  margin-top: 24px;
   padding: 28px 0;
   border-top: 1px solid var(--color-border);
   color: var(--color-text-secondary);
@@ -488,7 +511,7 @@ tr:last-child td {
   font-size: 13px;
 }
 
-/* 15. RTL support */
+/* 16. RTL support */
 
 [dir="rtl"] {
   text-align: right;
@@ -503,11 +526,12 @@ tr:last-child td {
   text-align: center;
 }
 
-/* 16. Tablet */
+/* 17. Tablet */
 
 @media (max-width: 768px) {
+
   main {
-    padding-block: 32px 52px;
+    padding-block: 32px 48px;
   }
 
   .card {
@@ -517,79 +541,63 @@ tr:last-child td {
   .header-inner {
     min-height: 60px;
   }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* 17. Mobile */
+/* 18. Mobile */
 
 @media (max-width: 540px) {
+
   .container {
     width: min(calc(100% - 24px), var(--content-width));
   }
 
   main {
-    padding-block: 26px 42px;
+    padding-top: 14px;
+    padding-bottom: 20px;
   }
 
   .page-heading {
-    margin-bottom: 24px;
+    margin-bottom: 14px;
   }
 
   .page-heading h1 {
-    font-size: 29px;
+    font-size: 25px;
+    margin-bottom: 5px;
   }
 
   .page-heading p {
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.4;
   }
 
-  .card {
-    padding: 17px;
+  .card,
+  .converter-card {
+    padding: 12px;
     border-radius: var(--radius-md);
   }
 
-  .selection-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group .btn {
-    width: 100%;
-  }
-
-  .batch-row {
-    grid-template-columns: 1fr;
-  }
-
-  .batch-result {
-    grid-column: auto;
-  }
-}
-
-/* Compact mobile converter spacing */
-@media (max-width: 540px) {
-
-  .converter-card {
-    padding: 12px;
-  }
-
   .card-title {
+    font-size: 17px;
     margin: 0 0 8px;
   }
 
   .converter-card .form-group {
-    margin: 0 0 8px;
-    gap: 3px;
+    margin: 0 0 7px;
+    gap: 2px;
   }
 
   .converter-card .form-label {
+    font-size: 13px;
     margin: 0;
-    line-height: 1.25;
+    line-height: 1.2;
   }
 
   .converter-card .form-hint {
+    font-size: 12px;
     margin: 0;
     line-height: 1.25;
   }
@@ -597,86 +605,48 @@ tr:last-child td {
   .converter-card input,
   .converter-card select {
     min-height: 38px;
-    padding: 7px 10px;
+    padding: 6px 9px;
   }
 
-  .converter-card .selection-grid {
-    gap: 7px;
-    margin-bottom: 7px;
+  .selection-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
   }
 
-  .converter-card .selection-grid .form-group {
+  .selection-grid .form-group {
     margin-bottom: 0;
   }
 
-  .converter-card .quick-options {
+  .quick-options {
     gap: 5px;
     margin-top: 2px;
   }
 
-  .converter-card .quick-option {
+  .quick-option {
     min-height: 29px;
     padding: 4px 8px;
+    font-size: 12px;
   }
 
   .converter-card .button-group {
+    flex-direction: column;
+    gap: 5px;
     margin-top: 7px;
-    gap: 6px;
   }
 
-  .converter-card .result-section {
-    margin-top: 9px;
+  .converter-card .button-group .btn {
+    width: 100%;
+    min-height: 41px;
+    padding: 8px 14px;
   }
 
-  .converter-card .result-box {
-    padding: 10px;
-  }
-
-  .converter-card .result-text {
-    line-height: 1.4;
-  }
-}
-
-/* Refined violet result box */
-.converter-card .result-section {
-  margin-top: 16px;
-}
-
-.converter-card .result-heading {
-  margin-bottom: 7px;
-}
-
-.converter-card .result-box {
-  background: #F5F3FF;
-  border: 1px solid #DDD6FE;
-  border-radius: 10px;
-  padding: 16px;
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-}
-
-.converter-card .result-text {
-  color: #37306B;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
-}
-
-.converter-card #copy {
-  margin-top: 2px;
-}
-
-.converter-card .message {
-  font-size: 12px;
-  margin-top: 6px;
-  line-height: 1.4;
-}
-
-@media (max-width: 540px) {
   .converter-card .result-section {
     margin-top: 10px;
+  }
+
+  .converter-card .result-heading {
+    margin-bottom: 5px;
   }
 
   .converter-card .result-box {
@@ -687,5 +657,32 @@ tr:last-child td {
   .converter-card .result-text {
     font-size: 14px;
     line-height: 1.5;
+  }
+
+  .converter-card .message {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .features {
+    margin-top: 12px;
+    gap: 8px;
+  }
+
+  .feature {
+    padding: 8px;
+  }
+
+  .site-footer {
+    margin-top: 12px;
+    padding: 10px 0;
+  }
+
+  .batch-row {
+    grid-template-columns: 1fr;
+  }
+
+  .batch-result {
+    grid-column: auto;
   }
 }
