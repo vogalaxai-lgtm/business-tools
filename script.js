@@ -3,17 +3,19 @@
 
 /* =========================================
    BUSINESS TOOLS — NUMBER TO WORDS ENGINE
-   Version 2.1
+   Version 2.2
 
-   Improvements:
-   - Automatic thousands separators in the input.
-   - Preserves exact decimal values.
-   - Supports negative amounts.
-   - Clear amount button.
-   - Live result and error state management.
-   - Copy button enabled only after successful conversion.
+   Features:
+   - Exact decimal handling with BigInt
+   - Automatic thousands separators
+   - Correct comma validation
+   - Negative amount support
+   - Eight supported currencies
+   - Clear amount button
+   - Copy protection against stale results
+   - Cursor position preservation
 
-   Public API preserved:
+   Public API:
      amountToWords(value, currency, language = "en")
      parseAmount(input, digits)
      integerToWords(value)
@@ -56,11 +58,13 @@
 
   const SCALES = Object.freeze([
     "", "thousand", "million", "billion", "trillion",
-    "quadrillion", "quintillion", "sextillion", "septillion",
-    "octillion", "nonillion", "decillion", "undecillion",
-    "duodecillion", "tredecillion", "quattuordecillion",
-    "quindecillion", "sexdecillion", "septendecillion",
-    "octodecillion", "novemdecillion", "vigintillion"
+    "quadrillion", "quintillion", "sextillion",
+    "septillion", "octillion", "nonillion",
+    "decillion", "undecillion", "duodecillion",
+    "tredecillion", "quattuordecillion",
+    "quindecillion", "sexdecillion",
+    "septendecillion", "octodecillion",
+    "novemdecillion", "vigintillion"
   ]);
 
   const MAX_INTEGER_DIGITS = SCALES.length * 3;
@@ -144,6 +148,13 @@
   /* 5. Convert numbers below 1000 */
 
   function underThousand(n) {
+
+    if (!Number.isInteger(n) || n < 0 || n > 999) {
+      throw new AmountToWordsError(
+        "Invalid number group.",
+        "INVALID_GROUP"
+      );
+    }
 
     if (n < 20) {
       return ONES[n];
@@ -523,7 +534,7 @@
 
 /* =========================================
    BUSINESS TOOLS — PAGE INTERACTIONS
-   Version 2.1
+   Version 2.2
 ========================================= */
 
 (function () {
@@ -550,12 +561,30 @@
   const quickCurrencyButtons =
     document.querySelectorAll(".quick-option");
 
+  if (
+    !languageSelect ||
+    !currencySelect ||
+    !resultText ||
+    !resultBox ||
+    !messageBox ||
+    !amountError ||
+    !convertButton ||
+    !copyButton ||
+    !clearAmountButton
+  ) {
+    console.error("BusinessTools: Required page elements are missing.");
+    return;
+  }
+
   let currentResult = "";
-  let copyResetTimer;
+  let copyResetTimer = null;
+
+  // Tracks the last value formatted by this script.
+  let lastFormattedValue = amountInput.value;
 
   const DEFAULT_RESULT = "Your result will appear here.";
 
-  /* Update quick currency buttons */
+  /* 1. Update quick currency buttons */
 
   function updateQuickCurrencies() {
 
@@ -575,7 +604,7 @@
 
   }
 
-  /* Copy button state */
+  /* 2. Copy button state */
 
   function setCopyEnabled(enabled) {
 
@@ -590,7 +619,10 @@
 
   function resetCopyButton() {
 
-    clearTimeout(copyResetTimer);
+    if (copyResetTimer !== null) {
+      clearTimeout(copyResetTimer);
+      copyResetTimer = null;
+    }
 
     copyButton.textContent = "Copy result";
 
@@ -598,7 +630,7 @@
 
   }
 
-  /* Clear messages */
+  /* 3. Clear messages */
 
   function clearMessages() {
 
@@ -613,7 +645,7 @@
 
   }
 
-  /* Display an error */
+  /* 4. Display input error */
 
   function showInputError(message) {
 
@@ -625,7 +657,7 @@
 
   }
 
-  /* Clear previous result */
+  /* 5. Clear previous conversion */
 
   function clearPreviousResult() {
 
@@ -639,83 +671,138 @@
 
   }
 
-  /* Format thousands separators */
+  /* 6. Format thousands separators */
 
   function formatAmountValue(value) {
 
-    const raw = value.replace(/,/g, "");
-
     /*
-      Format only valid numeric editing states.
-      Invalid text remains untouched so the engine can report errors.
+      Accept:
+        1250
+        1250.50
+        1,250
+        1,250.50
+
+      Reject malformed commas:
+        1,25
+        12,34
+        1,23,456
     */
 
-    if (!/^[+-]?\d+(?:\.\d*)?$/.test(raw)) {
+    const validEditingPattern =
+      /^[+-]?(?:\d+|[1-9]\d{0,2}(?:,\d{3})+)(?:\.\d*)?$/;
+
+    if (!validEditingPattern.test(value)) {
       return value;
     }
 
-    const sign = raw.match(/^[+-]/)?.[0] || "";
-    const unsigned = raw.slice(sign.length);
+    const sign = value.match(/^[+-]/)?.[0] || "";
+    const unsigned = value.slice(sign.length);
 
     const parts = unsigned.split(".");
     const integerPart = parts[0];
     const decimalPart = parts.length > 1 ? parts[1] : null;
 
+    // Keep leading zeros unchanged.
+    if (
+      integerPart.length > 1 &&
+      integerPart.startsWith("0")
+    ) {
+      return value;
+    }
+
+    const cleanInteger = integerPart.replace(/,/g, "");
+
     const formattedInteger =
-      integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      cleanInteger.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     return sign + formattedInteger +
       (decimalPart !== null ? "." + decimalPart : "");
 
   }
 
-  /* Preserve cursor position while adding commas */
+  /* 7. Preserve cursor position */
 
-  function formatInputWithCursor() {
+  function formatInputWithCursor(event) {
 
     const oldValue = amountInput.value;
+
     const oldPosition =
       amountInput.selectionStart ?? oldValue.length;
 
-    const nonCommaCharactersBeforeCursor =
-      oldValue.slice(0, oldPosition).replace(/,/g, "").length;
+    let valueToFormat = oldValue;
 
-    const newValue = formatAmountValue(oldValue);
+    /*
+      If the previous value was formatted automatically,
+      allow normal typing and deletion without getting stuck
+      on an incomplete thousands group.
 
-    if (newValue === oldValue) {
-      return;
-    }
+      Pasted text is not cleaned this way, so malformed
+      pasted commas remain invalid.
+    */
 
-    amountInput.value = newValue;
+    const isPaste =
+      event && (
+        event.inputType === "insertFromPaste" ||
+        event.inputType === "insertFromDrop"
+      );
 
-    let newPosition = 0;
-    let counted = 0;
-
-    while (
-      newPosition < newValue.length &&
-      counted < nonCommaCharactersBeforeCursor
+    if (
+      lastFormattedValue !== "" &&
+      oldValue !== lastFormattedValue &&
+      !isPaste &&
+      lastFormattedValue.includes(",")
     ) {
 
-      if (newValue[newPosition] !== ",") {
-        counted++;
-      }
-
-      newPosition++;
+      valueToFormat = oldValue.replace(/,/g, "");
 
     }
 
-    amountInput.setSelectionRange(
-      newPosition,
-      newPosition
-    );
+    const charactersBeforeCursor =
+      valueToFormat
+        .slice(0, oldPosition)
+        .replace(/,/g, "")
+        .length;
+
+    const newValue = formatAmountValue(valueToFormat);
+
+    if (newValue !== oldValue) {
+
+      amountInput.value = newValue;
+
+      let newPosition = 0;
+      let counted = 0;
+
+      while (
+        newPosition < newValue.length &&
+        counted < charactersBeforeCursor
+      ) {
+
+        if (newValue[newPosition] !== ",") {
+          counted++;
+        }
+
+        newPosition++;
+
+      }
+
+      amountInput.setSelectionRange(
+        newPosition,
+        newPosition
+      );
+
+    }
+
+    lastFormattedValue = amountInput.value;
 
   }
 
-  /* Clear all numbers */
+  /* 8. Clear all numbers */
 
   clearAmountButton.addEventListener("click", () => {
 
     amountInput.value = "";
+
+    lastFormattedValue = "";
 
     clearPreviousResult();
 
@@ -723,17 +810,17 @@
 
   });
 
-  /* Automatic formatting while typing */
+  /* 9. Automatic formatting while typing */
 
-  amountInput.addEventListener("input", () => {
+  amountInput.addEventListener("input", event => {
 
-    formatInputWithCursor();
+    formatInputWithCursor(event);
 
     clearPreviousResult();
 
   });
 
-  /* Quick currency selection */
+  /* 10. Quick currency selection */
 
   quickCurrencyButtons.forEach(button => {
 
@@ -749,7 +836,7 @@
 
   });
 
-  /* Currency dropdown */
+  /* 11. Currency dropdown */
 
   currencySelect.addEventListener("change", () => {
 
@@ -759,7 +846,7 @@
 
   });
 
-  /* Language dropdown */
+  /* 12. Language dropdown */
 
   languageSelect.addEventListener("change", () => {
 
@@ -767,7 +854,7 @@
 
   });
 
-  /* Convert amount */
+  /* 13. Convert amount */
 
   convertButton.addEventListener("click", () => {
 
@@ -819,6 +906,8 @@
 
     } catch (error) {
 
+      currentResult = "";
+
       resultText.textContent =
         "Unable to convert this amount.";
 
@@ -836,7 +925,7 @@
 
   });
 
-  /* Copy result */
+  /* 14. Copy result */
 
   copyButton.addEventListener("click", async () => {
 
@@ -846,9 +935,22 @@
 
     try {
 
+      if (
+        !navigator.clipboard ||
+        typeof navigator.clipboard.writeText !== "function"
+      ) {
+        throw new Error("Clipboard unavailable");
+      }
+
       await navigator.clipboard.writeText(currentResult);
 
-      clearTimeout(copyResetTimer);
+      if (!currentResult) {
+        return;
+      }
+
+      if (copyResetTimer !== null) {
+        clearTimeout(copyResetTimer);
+      }
 
       copyButton.textContent = "Copied ✓";
 
@@ -858,6 +960,7 @@
       copyResetTimer = setTimeout(() => {
 
         copyButton.textContent = "Copy result";
+        copyResetTimer = null;
 
       }, 2000);
 
@@ -870,11 +973,13 @@
 
   });
 
-  /* Press Enter to convert */
+  /* 15. Press Enter to convert */
 
   amountInput.addEventListener("keydown", event => {
 
     if (event.key === "Enter") {
+
+      event.preventDefault();
 
       convertButton.click();
 
@@ -882,7 +987,7 @@
 
   });
 
-  /* Initial state */
+  /* 16. Initial state */
 
   updateQuickCurrencies();
 
