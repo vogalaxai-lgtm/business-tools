@@ -636,3 +636,56 @@ tr:last-child td {
     line-height: 1.4;
   }
 }
+
+/* Professional conversion result */
+.converter-card .result-section {
+  margin-top: 16px;
+}
+
+.converter-card .result-heading {
+  margin-bottom: 7px;
+}
+
+.converter-card .result-box {
+  background: #f5f7ff;
+  border: 1px solid #dce3f5;
+  border-radius: 10px;
+  padding: 16px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.converter-card .result-text {
+  color: #24345b;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.converter-card #copy {
+  margin-top: 2px;
+}
+
+.converter-card .message {
+  font-size: 12px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+@media (max-width: 540px) {
+  .converter-card .result-section {
+    margin-top: 10px;
+  }
+
+  .converter-card .result-box {
+    min-height: 60px;
+    padding: 11px;
+  }
+
+  .converter-card .result-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
