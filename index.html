@@ -60,19 +60,42 @@
             Enter a number or amount
           </label>
 
-          <input
-            id="amount"
-            type="text"
-            inputmode="decimal"
-            placeholder="Example: 1250.50"
-            autocomplete="off"
-            spellcheck="false"
-            aria-describedby="amount-hint"
-          >
+          <div class="amount-input-wrapper">
+
+            <input
+              id="amount"
+              type="text"
+              inputmode="decimal"
+              placeholder="Example: 1250.50"
+              autocomplete="off"
+              spellcheck="false"
+              aria-describedby="amount-hint amount-error"
+              aria-invalid="false"
+            >
+
+            <button
+              id="clearAmount"
+              class="clear-amount"
+              type="button"
+              aria-label="Clear all numbers"
+              title="Clear amount"
+            >
+              ×
+            </button>
+
+          </div>
 
           <span class="form-hint" id="amount-hint">
             Enter a positive or negative amount using a decimal point.
+            Thousands separators will be added automatically.
           </span>
+
+          <div
+            class="message error-message"
+            id="amount-error"
+            role="alert"
+            aria-live="polite"
+          ></div>
 
         </div>
 
@@ -198,6 +221,8 @@
               id="copy"
               class="btn btn-secondary btn-block"
               type="button"
+              disabled
+              aria-disabled="true"
             >
               Copy result
             </button>
@@ -248,11 +273,6 @@
   <!-- CONVERSION ENGINE -->
   <script src="./script.js"></script>
 
-  <!-- ENGINE DIAGNOSTIC TEST -->
-  <script>
-    alert("Engine status: " + typeof window.amountToWords);
-  </script>
-
   <!-- PAGE INTERACTIONS -->
   <script>
 
@@ -261,10 +281,14 @@
     const currencySelect = document.getElementById("currency");
 
     const resultText = document.getElementById("resultText");
+    const resultBox = document.getElementById("result");
+
     const messageBox = document.getElementById("message");
+    const amountError = document.getElementById("amount-error");
 
     const convertButton = document.getElementById("convert");
     const copyButton = document.getElementById("copy");
+    const clearAmountButton = document.getElementById("clearAmount");
 
     const quickCurrencyButtons =
       document.querySelectorAll(".quick-option");
@@ -293,12 +317,51 @@
 
     }
 
+    // Enable or disable copy button
+    function setCopyEnabled(enabled) {
+
+      copyButton.disabled = !enabled;
+
+      copyButton.setAttribute(
+        "aria-disabled",
+        String(!enabled)
+      );
+
+    }
+
     // Reset copy button
     function resetCopyButton() {
 
       clearTimeout(copyResetTimer);
 
       copyButton.textContent = "Copy result";
+
+      setCopyEnabled(false);
+
+    }
+
+    // Clear messages
+    function clearMessages() {
+
+      messageBox.textContent = "";
+      amountError.textContent = "";
+
+      amountInput.classList.remove("input-error");
+
+      amountInput.setAttribute("aria-invalid", "false");
+
+      resultBox.classList.remove("result-error");
+
+    }
+
+    // Display input error
+    function showInputError(message) {
+
+      amountError.textContent = message;
+
+      amountInput.classList.add("input-error");
+
+      amountInput.setAttribute("aria-invalid", "true");
 
     }
 
@@ -309,11 +372,22 @@
 
       resultText.textContent = DEFAULT_RESULT;
 
-      messageBox.textContent = "";
+      clearMessages();
 
       resetCopyButton();
 
     }
+
+    // Clear all numbers
+    clearAmountButton.addEventListener("click", () => {
+
+      amountInput.value = "";
+
+      clearPreviousResult();
+
+      amountInput.focus();
+
+    });
 
     // Quick currency selection
     quickCurrencyButtons.forEach(button => {
@@ -360,6 +434,12 @@
 
       try {
 
+        if (!amountInput.value.trim()) {
+
+          throw new Error("Please enter an amount.");
+
+        }
+
         if (typeof amountToWords !== "function") {
 
           throw new Error(
@@ -374,7 +454,10 @@
           languageSelect.value
         );
 
-        if (typeof converted !== "string" || !converted.trim()) {
+        if (
+          typeof converted !== "string" ||
+          !converted.trim()
+        ) {
 
           throw new Error(
             "No conversion result was returned."
@@ -386,15 +469,20 @@
 
         resultText.textContent = converted;
 
+        setCopyEnabled(true);
+
       } catch (error) {
 
         resultText.textContent =
           "Unable to convert this amount.";
 
-        messageBox.textContent =
+        resultBox.classList.add("result-error");
+
+        showInputError(
           error && error.message
             ? error.message
-            : "An unexpected error occurred.";
+            : "An unexpected error occurred."
+        );
 
       }
 
@@ -403,13 +491,8 @@
     // Copy result
     copyButton.addEventListener("click", async () => {
 
-      if (!currentResult) {
-
-        messageBox.textContent =
-          "There is no result to copy.";
-
+      if (!currentResult || copyButton.disabled) {
         return;
-
       }
 
       try {
@@ -451,6 +534,8 @@
 
     // Initial state
     updateQuickCurrencies();
+
+    setCopyEnabled(false);
 
   </script>
 
